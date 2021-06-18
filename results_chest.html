@@ -19,6 +19,15 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
+        
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <button class="btn btn-primary text-uppercase" onclick="LogoutUser()">Log Out</button>
+            </div>
+        </nav>
+        <br>
+        <br>
 
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
@@ -27,7 +36,7 @@
                     <br>
                     <h3 class="section-subheading text-muted" style="font-size: 30px;">Input Image</h3>
                 </div>
-                <center>
+            <center>
                 <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
                     <div class="portfolio-item">
                             <img class="img-fluid" src="uploads/upload_img.png" alt="..." /> 
@@ -70,5 +79,36 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase.js"></script>
+    <script>
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyBuHCFq9qIGMTACJtdhSRNWot6RPAqIBeQ",
+            authDomain: "login-test-89646.firebaseapp.com",
+            databaseURL: "https://login-test-89646-default-rtdb.firebaseio.com",
+            projectId: "login-test-89646",
+            storageBucket: "login-test-89646.appspot.com",
+            messagingSenderId: "426889438690",
+            appId: "1:426889438690:web:4aa5352f0ce4783f5705bb",
+            measurementId: "G-43EJC2QDZW"
+        };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+        function LogoutUser(){
+            firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            alert('Logged Out Successfully!!!');
+            window.location.replace("index.html");
+            }).catch(function(error) {
+            // An error happened.
+            console.log(error);
+            });
+          }
+    </script>
+
     </body>
 </html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lung Diseases Prediction</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/login_style.css"/>
+  <!-- Favicon-->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicons/site.webmanifest">
+</head>
+<body>
+  
+  <h1>Lung Diseases Prediction</h1><br><br>
+<div class="container" id="container">
+
+    <div class="form-container sign-up-container">
+      <div class="form">
+        <h1>Create Account</h1>
+        <span>use your email for registration</span><br>
+        <input type="text" id="name_c"placeholder="Name" />
+        <input type="email" id="email_c" placeholder="Email" />
+        <input type="password" id="password_c" placeholder="Password" />
+        <input type="text" id="uprn_c" placeholder="UPRN Number" /><br>
+        <button onclick="RegisterUser()">Sign Up</button>
+      </div>
+    </div>
+  
+    <div class="form-container sign-in-container">
+      <div class="form">
+        <h1>Sign in</h1>
+        <span>use your account</span><br>
+        <input type="email" name="email" id="email" placeholder="Enter Your Email">
+        <input type="password" name="pass" id="password" placeholder="Enter Your Password">
+        <a href="#">Forgot your password?</a>
+        <button onclick="LoginUser()">Sign In</button>
+      </div>
+    </div>
+
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>To keep connected with us please login with your personal info</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+  
+        <div class="overlay-panel overlay-right">
+          <h1>Hello, Friend!</h1>
+          <p>Enter your personal details and start journey with us</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+ <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBuHCFq9qIGMTACJtdhSRNWot6RPAqIBeQ",
+    authDomain: "login-test-89646.firebaseapp.com",
+    databaseURL: "https://login-test-89646-default-rtdb.firebaseio.com",
+    projectId: "login-test-89646",
+    storageBucket: "login-test-89646.appspot.com",
+    messagingSenderId: "426889438690",
+    appId: "1:426889438690:web:4aa5352f0ce4783f5705bb",
+    measurementId: "G-43EJC2QDZW"
+  };
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+
+
+  function RegisterUser() {
+   var email=document.getElementById('email_c').value;
+   var password=document.getElementById('password_c').value;
+   var name=document.getElementById('name_c').value;
+   var UPRN=document.getElementById('uprn_c').value;
+
+   firebase.auth().createUserWithEmailAndPassword(email,password).then(function(){
+    alert(name+' Registered successfully');
+    var id=firebase.auth().currentUser.uid;
+    firebase.database().ref('/'+id).set({
+     Name:name,
+     Email:email,
+     UPRN_Number:UPRN,
+    });
+   // window.location.replace("login.html");
+   }).catch(function(error){
+
+    var errorcode=error.code;
+    var errormsg=error.message;
+    alert('Error!!! Please Try Again...');
+
+   });
+  }
+  
+  function LoginUser(){
+   var email=document.getElementById('email').value;
+   var password=document.getElementById('password').value;
+   firebase.auth().signInWithEmailAndPassword(email,password).then(function(){
+
+    var id=firebase.auth().currentUser.uid;
+    window.location.replace("upload.html");
+    localStorage.setItem('id',id);
+    
+   }).catch(function(error){
+    alert("Incorrect Username or Password");
+    var errorCode=error.code;
+    var errorMsg=error.message;
+
+   });
+  }
+function LogoutUser(){
+  firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+  alert('User Logged Out!');
+  }).catch(function(error) {
+  // An error happened.
+  console.log(error);
+  });
+}
+</script>
+
+
+<script>
+	const signUpButton = document.getElementById('signUp');
+	const signInButton = document.getElementById('signIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+		container.classList.add("right-panel-active");
+	});
+
+	signInButton.addEventListener('click', () => {
+		container.classList.remove("right-panel-active");
+	});
+ </script>
+
+</body>
+</html>
